@@ -1,6 +1,7 @@
+import sentry_sdk
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-
+from .models import Book
 from allauth.socialaccount.models import SocialAccount
 
 
@@ -20,3 +21,10 @@ def some_view(request):
 
 def main(request):
     return render(request, 'src/Googlelink.html')
+
+
+def my_view(request):
+    try:
+        raise ValueError('Пример исключения')
+    except Exception as e:
+        sentry_sdk.capture_exception(e)

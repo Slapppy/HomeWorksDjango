@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,6 +29,17 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
+
+sentry_sdk.init(
+    dsn='https://cdea57ea17784e72a7b12bd270e7052c@o4505246444027904.ingest.sentry.io/4505246469324800',
+    integrations=[DjangoIntegration()],
+    # Дополнительные параметры конфигурации, если требуется
+)
+
+# Добавьте это в самом начале файла settings.py
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +54,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'djongo'
 
 ]
 
@@ -82,11 +95,19 @@ WSGI_APPLICATION = "HomeWorksDjango.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'Cluster44698',  # Имя вашей базы данных
+        'CLIENT': {
+            'host': 'localhost',  # Хост MongoDB
+            'port': 27017,  # Порт MongoDB
+            'username': 'Cluster44698',  # Имя пользователя MongoDB
+            'password': 'SEtIcXdFXVpd',  # Пароль пользователя MongoDB
+
+        }
     }
 }
+
 
 
 # Password validation
@@ -146,3 +167,5 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+
